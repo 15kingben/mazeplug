@@ -1,0 +1,12 @@
+name: mazeplug
+version: 0.1
+description: Allow signs to be link signs and open webpages.
+main: me.ben.mazeplug.Main
+commands:
+  broadcast:
+    description: write something to blue
+  cube: 
+    description: make a cube 10 blocks above player should print if run
+  create:
+    description: make wall should print if run
+    

@@ -1,0 +1,32 @@
+package me.ben.mazeplug;
+
+import java.util.Random;
+
+import org.bukkit.Location;
+import org.bukkit.entity.Player;
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.Listener;
+import org.bukkit.event.player.PlayerLoginEvent;
+import org.bukkit.event.player.PlayerMoveEvent;
+import org.bukkit.event.world.WorldLoadEvent;
+
+public class WorldLoadListener implements Listener {
+	@EventHandler
+	public void onWorldInit(WorldLoadEvent wit){
+		Random r = new Random();
+		Main.generateMaze(new Location(wit.getWorld(),0,0,0), 200, 5, r, wit.getWorld());
+	}
+	@EventHandler
+	public void onWordInit(PlayerLoginEvent wit){
+		Random r = new Random();
+		Main.generateMaze(wit.getPlayer().getLocation(), 200, 5, r, wit.getPlayer().getWorld());
+	}
+	  @EventHandler
+      public void onPlayerMove(PlayerMoveEvent event){
+              Player player = event.getPlayer();
+              Location playerLoc = player.getLocation();
+              player.sendMessage("Your X Coordinates : " + playerLoc.getX());
+              player.sendMessage("Your Y Coordinates : " + playerLoc.getY());
+              player.sendMessage("Your Z Coordinates : " + playerLoc.getZ());
+      }
+}

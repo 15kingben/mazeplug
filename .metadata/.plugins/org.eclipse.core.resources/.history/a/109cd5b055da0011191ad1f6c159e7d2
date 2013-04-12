@@ -1,0 +1,128 @@
+package me.ben.mazeplug;
+
+import java.util.logging.Logger;
+import java.util.Random;
+import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
+import org.bukkit.Location;
+import org.bukkit.Material;
+import org.bukkit.World;
+import org.bukkit.block.Block;
+import org.bukkit.command.Command;
+import org.bukkit.command.CommandSender;
+import org.bukkit.entity.Player;
+
+import org.bukkit.plugin.Plugin;
+import org.bukkit.plugin.PluginDescriptionFile;
+import org.bukkit.plugin.java.JavaPlugin;
+
+public class Main extends JavaPlugin{
+	
+	private Logger log = Logger.getLogger("Minecraft");
+	//private static Plugin plugin = this;
+	
+	
+	//Bukkit.getScheduler().scheduleSyncDelayedTask(this, new Runnable(){
+//		public void run(Block block){
+	//	    block.setType(Material.WATER);
+//		});
+	
+	@Override
+	public void onDisable(){
+		
+	}
+	public void onEnable(){
+		logMessage("Enable");
+	}
+	
+	public void logMessage(String msg){
+		
+		PluginDescriptionFile pdfile = this.getDescription();
+		log.info(pdfile.getName() + " " + pdfile.getVersion() + " :"+ msg);
+	}
+	
+	public boolean onCommand(CommandSender sender, Command cmd, String commandLabel, String args[]){
+		if(commandLabel.equalsIgnoreCase("broadcast")){
+			if(args[0].equalsIgnoreCase("blue")){
+				String toBroadcast = "";
+				for(String s : args){
+					if(s != "blue"){
+						toBroadcast = toBroadcast + s + " ";
+					}
+					
+				}
+				Bukkit.broadcastMessage(ChatColor.BLUE + "[SERVER]" +  toBroadcast);
+			}
+			
+		}else if(commandLabel.equalsIgnoreCase("create")){
+			Random r = new Random();
+			generateMaze(new Location(Bukkit.getServer().getWorld("world"), 0, 0, 0), 200, 5, r, Bukkit.getServer().getWorld("world"));
+		}else if(commandLabel.equalsIgnoreCase("cube")){
+			Player p = (Player)sender;
+			Location pp = new Location(p.getWorld(), p.getLocation().getBlockX(), p.getLocation().getBlockY() + 10, p.getLocation().getBlockZ());
+			generateCube(pp ,5);
+		}
+	return false;
+	}
+	
+	public static void generateMaze(Location center, int dimension, int passageWidth, Random r , World world)
+	{
+		
+	Location l = new Location(world, 0, 0, 0);
+		Bukkit.broadcastMessage("This has run");
+		//gen outer walls
+		for(int i = (int) (center.getBlockX()-dimension/4); i <= (center.getBlockX() + dimension/4); i++ ){
+			for(int ii = 0; ii < 256; ii++)
+			l.setY(ii);
+			l.setX(i);
+			l.setZ(center.getBlockZ() - dimension/4);
+			
+			Block b = l.getBlock();
+			b.setType(Material.BEDROCK);
+			b.getState().update();
+		}
+				//Chamber c = new Chamber(/*p.getX() + dimension/4, p.getX() - dimension/4, p.getY() + dimension/4, p.getY() - dimension/4,*/dimension, p );
+		
+		
+		//recursive part
+	//	Bukkit.getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
+	//		  @Override
+	//		  public void run() {
+	//		    block.setType(Material.STONE);
+	//		  }
+//			});
+		
+		
+		
+	}
+	public void generateCube(Location point, int length){  // public visible method generateCube() with 2 parameters point and location
+		World world = point.getWorld();
+		Bukkit.broadcastMessage("This has run");
+		int x_start = point.getBlockX();     // Set the startpoints to the coordinates of the given location
+		int y_start = point.getBlockY() + 10;     // I use getBlockX() instead of getX() because it gives you a int value and so you dont have to cast it with (int)point.getX()
+		int z_start = point.getBlockZ();
+	 
+		int x_length = x_start + length;    // now i set the lengths for each dimension... should be clear.
+		int y_length = y_start + length;
+		int z_length = z_start + length;
+	 
+		for(int x_operate = x_start; x_operate <= x_length; x_operate++){ 
+			// Loop 1 for the X-Dimension "for x_operate (which is set to x_start) 
+			//do whats inside the loop while x_operate is 
+			//<= x_length and after each loop increase 
+			//x_operate by 1 (x_operate++ is the same as x_operate=x_operate+1;)
+			for(int y_operate = y_start; y_operate <= y_length; y_operate++){// Loop 2 for the Y-Dimension
+				for(int z_operate = z_start; z_operate <= z_length; z_operate++){// Loop 3 for the Z-Dimension
+	 
+					Block blockToChange = world.getBlockAt(x_operate,y_operate,z_operate); // get the block with the current coordinates
+					blockToChange.setTypeId(34);    // set the block to Type 34
+					//blockToChange.getState().update();
+					//blockToChange.getState().setType(Material.BEDROCK);
+				}
+			}
+		}
+	}
+	
+	
+
+}

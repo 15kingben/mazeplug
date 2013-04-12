@@ -1,0 +1,69 @@
+package me.ben.mazeplug;
+
+import java.util.logging.Logger;
+
+import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
+import org.bukkit.Location;
+import org.bukkit.command.Command;
+import org.bukkit.command.CommandSender;
+import java.util.Random;
+import org.bukkit.plugin.PluginDescriptionFile;
+import org.bukkit.plugin.java.JavaPlugin;
+
+public class Main extends JavaPlugin{
+	
+	private Logger log = Logger.getLogger("Minecraft");
+	
+	
+	@Override
+	public void onDisable(){
+		
+	}
+	public void onEnable(){
+		logMessage("Enable");
+	}
+	
+	public void logMessage(String msg){
+		
+		PluginDescriptionFile pdfile = this.getDescription();
+		log.info(pdfile.getName() + " " + pdfile.getVersion() + " :"+ msg);
+	}
+	
+	public boolean onCommand(CommandSender sender, Command cmd, String commandLabel, String args[]){
+		if(commandLabel.equalsIgnoreCase("broadcast")){
+			if(args[0].equalsIgnoreCase("blue")){
+				String toBroadcast = "";
+				for(String s : args){
+					if(s != "blue"){
+						toBroadcast = toBroadcast + s + " ";
+					}
+					
+				}
+				Bukkit.broadcastMessage(ChatColor.BLUE + "[SERVER]" +  toBroadcast);
+			}
+			
+			
+		}
+	return false;
+	}
+	
+	public void generateMaze()
+	{
+		Location p = new Location(Bukkit.getServer().getWorld("world"), 0, 0, 0);
+		int passageWidth = 5;//minimum size of passage
+		int dimension = 200;//square size of maze
+		int locX;//location of new wall X
+		int locY;//location of new wall Y
+		Random r = new Random();
+		locX = r.nextInt(39) * 5;
+		
+		
+		//recursive part
+		
+		
+		
+	}
+	
+
+}
