@@ -7,12 +7,12 @@ import org.bukkit.Location;
 public class Chamber {
 	private int xDimension;
 	private int zDimension;
-	private Location center;
+	private Location bottomLeft;
 	private Random r = new Random();
 	
-	public Chamber(int xDimension, int zDimension, Location center){
+	public Chamber(int xDimension, int zDimension, Location bottomLeft){
 		this.xDimension = xDimension;
-		this.center = center;
+		this.bottomLeft = bottomLeft;
 		this.zDimension = zDimension;
 	}
 	public int getXDimension(){
@@ -21,20 +21,20 @@ public class Chamber {
 	public int getZDimension(){
 		return zDimension;
 	}
-	public Location getCenter(){
-		return center;
+	public Location getBL(){
+		return bottomLeft;
 	}
 	public int getTop(){
-		return center.getBlockZ() + (int)(.5 * getZDimension());
+		return bottomLeft.getBlockZ() + zDimension;
 	}
 	public int getDown(){
-		return center.getBlockZ() - (int)(.5 * getZDimension());
+		return bottomLeft.getBlockZ();
 	}
 	public int getRight(){
-		return center.getBlockX() + (int)(.5 * getZDimension());
+		return bottomLeft.getBlockX() + xDimension;
 	}
 	public int getLeft(){
-		return center.getBlockX() - (int)(.5 * getZDimension());
+		return bottomLeft.getBlockX();
 	}
 	public String getOrientation() {
 		int g = r.nextInt(2);

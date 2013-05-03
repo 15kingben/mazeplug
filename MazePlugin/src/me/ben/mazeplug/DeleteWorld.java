@@ -1,7 +1,6 @@
 package me.ben.mazeplug;
 
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 
 import org.bukkit.Bukkit;
