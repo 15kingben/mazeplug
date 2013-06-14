@@ -1,62 +1,33 @@
 name: mazeplug
-version: 0.7
-description: Creates a random maze for pvp play.
+version: 1.0
+description: Creates a random maze for pvp play
 author: 15kingben
 main: me.ben.mazeplug.Main
 commands:
   create:
     description: create a maze with given parameters
     permission: maze.create
-    usage: /create <width> <passage width> <worldname>(optional-for console)
+    usage: /create <width> <passage width> OR /create will get values from config
   startMatch:
     description: start the match and teleport players into the maze
-    permission: maze.close
+    permission: maze.operator
   stopMatch:
     description: stop the match
-    permission: maze.close
-  close:
-    description: walls close in
-    permission: maze.close
-  chests:
-    description: add chests to the center
-    permission: maze.close
-  auto:
-    description: set creation to automatic
-    permission: maze.auto
-  manual:
-    description: set creation to manual(default)
-    permission: maze.auto
-  startWalls:
-    description: set whether or not the walls will crush you
-    permission: walls.auto
-  stopWalls:
-    description: set whether or not the walls will crush you
-    permission: walls.auto
+    permission: maze.operator
   DeleteMaze:
     description: delete a built maze
-    usage: /deletemaze <width>
-    permission: maze.close
+    permission: maze.create
   joinMatch:
     description: puts you on a list to join the match
-    usage: /joinMatch
-  
-  
+    permission: maze.canjoin
+
 permissions:
-  maze.*:
-    description: give acess to all maze commands
-    children:
-      admin.close: true
-      admin.create: true
-      admin.broadcast: true
   maze.create:
-    description: create a maze if not on manual 
+    description: ability to create/delete mazes 
     default: op
-  maze.close:
-    description: Close in walls
+  maze.operator:
+    description: control of starting matches
     default: op
-  maze.broadcast:
-    description: broadcast message
-    default: op
-  maze.auto:
-    description: toggle server to auto
-    default: op
+  maze.canjoin:
+    description: ability to join maze matches
+    default: true

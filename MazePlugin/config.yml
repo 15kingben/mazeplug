@@ -1,0 +1,28 @@
+#default config file for PVP Maze
+
+#maze settings
+
+width: 200         #the total width of the maze from end to end
+passagewidth: 10   #the width of the maze passages
+worldname: world   #the name of the world
+locx: 0            #the x coordinate of the maze center
+locz: 0            #the z coordinate of the maze center
+holefreq: 10       #the frequency of holes in the maze, set to -1 for none, set from 1(lowest- 1 out of 100 columns are holes) to 100(highest- every column has a hole)
+#/maze setting
+
+
+#deleteMaze settings
+deletemaze:
+  width: 200
+  locx: 0
+  locz: 0
+  worldname: world
+#/deletemaze settings
+
+
+#match settings(in minutes)
+chestsfreq:  3    #the frequency chests appearing   set to -1 to cancel chests
+chestsdelay: 5    #the initial delay before chests begin to appear
+wallsfreq:   3    #the frequency of walls closing   set to -1 to cancel walls closing
+wallsdelay:  5    #the initial delay before the walls begin to close
+#/match settings

@@ -39,7 +39,7 @@ public class WorldLoadListener implements Listener {
 	//	Random r = new Random();
 	//	Main.generateMaze(new Location(wit.getWorld(),0,0,0), 500, 5, r, wit.getWorld());
 	//}
-	@EventHandler    
+	/*@EventHandler    
 	public void onWorldInit(PlayerJoinEvent wit){
 		Random r = new Random();
 		if(first == false && Main.getAuto() == true){
@@ -50,24 +50,41 @@ public class WorldLoadListener implements Listener {
 		wit.getPlayer().getWorld().setPVP(false);
 		}
 		
-	}
+	}*/
 	
 	public void onPlayerJoin(PlayerJoinEvent pje){
-		if(Main.getStart() == true && !Main.getPlayers().contains(pje.getPlayer()) && pje.getPlayer().getLocation().getBlockX() < Main.getWalls()/4 && pje.getPlayer().getLocation().getBlockZ() < Main.getWalls()/4 ){
-			pje.getPlayer().teleport(new Location(pje.getPlayer().getWorld(), pje.getPlayer().getLocation().getX(), pje.getPlayer().getWorld().getHighestBlockYAt(pje.getPlayer().getLocation().getBlockX(), Main.getWalls()/4 + 10),  Main.getWalls()/4 + 10 ));
-			pje.getPlayer().sendMessage("You have been teleported out of the maze because there is a match going on");
+		//if(Main.getStart() == true && !Main.getPlayers().contains(pje.getPlayer()) && pje.getPlayer().getLocation().getBlockX() < Main.getWalls()/4 && pje.getPlayer().getLocation().getBlockZ() < Main.getWalls()/4 ){
+			//p.teleport(new Location(p.getWorld(), p.getLocation().getX(), p.getWorld().getHighestBlockYAt(p.getPlayer().getLocation().getBlockX(), Main.getWalls()/4 + 10),  Main.getWalls()/4 + 10 ));
+			//p.sendMessage("You have been teleported out of the maze because there is a match going on");
+		//}
+		Player p = pje.getPlayer();
+		if(Main.getStart()){//if the match has started
+			if(!Main.getPlayers().contains(p)){
+			if(Math.abs(p.getLocation().getBlockX() - Main.getCenter().getBlockX()) < Main.getWalls() && Math.abs(p.getLocation().getBlockZ() - Main.getCenter().getBlockZ()) < Main.getWalls() )//if player is within maze confounds
+				p.teleport(new Location(p.getWorld(), p.getLocation().getX(), p.getWorld().getHighestBlockYAt(p.getLocation().getBlockX(), Main.getCenter().getBlockZ() + Main.getWalls()/4 + 10),  Main.getCenter().getBlockZ() + Main.getWalls()/4 + 10 ));
+				p.sendMessage("You have been teleported out of the maze because there is a match going on");
+		
+			}
 		}
+		
+		
 	}
 	@EventHandler
 	public void onBlockPlace(PlayerMoveEvent event){
 		boolean outside = false;
 		Player p = event.getPlayer();
 		
-		if(Main.getStart() == true && !Main.getPlayers().contains(event.getPlayer()) && event.getPlayer().getLocation().getBlockX() < Main.getWalls()/4 && event.getPlayer().getLocation().getBlockZ() < Main.getWalls()/4 ){
-			event.getPlayer().teleport(new Location(event.getPlayer().getWorld(), event.getPlayer().getLocation().getX(), event.getPlayer().getWorld().getHighestBlockYAt(event.getPlayer().getLocation().getBlockX(), Main.getWalls()/4 + 10),  Main.getWalls()/4 + 10 ));
-			event.getPlayer().sendMessage("You have been teleported out of the maze because there is a match going on");
-		}
 		
+		if(Main.getStart()){//if the match has started
+			if(!Main.getPlayers().contains(p) && !p.isOp()){
+			if(Math.abs(p.getLocation().getBlockX() - Main.getCenter().getBlockX()) < Main.getWallsOrig()/4 && Math.abs(p.getLocation().getBlockZ() - Main.getCenter().getBlockZ()) < Main.getWallsOrig()/4 ){//if player is within maze confounds
+				p.teleport(new Location(p.getWorld(), p.getLocation().getX(), p.getWorld().getHighestBlockYAt(p.getLocation().getBlockX(), Main.getCenter().getBlockZ() + Main.getWallsOrig()/4 + 10),  Main.getCenter().getBlockZ() + Main.getWallsOrig()/4 + 10 ));
+				
+				p.sendMessage("You have been teleported out of the maze because there is a match going on");
+				}
+			}
+		}
+		 
 		if(Main.getPlayers().contains(p) && Main.getStart()){
 		
 			
@@ -80,7 +97,7 @@ public class WorldLoadListener implements Listener {
 			p.kickPlayer("You went too high!");
 		}
 		if(!p.isOp()){
-		    if(p.getLocation().getBlockZ() > Main.getWalls() / 4 || p.getLocation().getBlockZ() < -(Main.getWalls() / 4) || p.getLocation().getBlockX() > Main.getWalls() / 4 || p.getLocation().getBlockX() < -(Main.getWalls() / 4) ){
+		    if(p.getLocation().getBlockZ() > Main.getCenter().getBlockZ() + Main.getWalls() / 4 || p.getLocation().getBlockZ() < Main.getCenter().getBlockZ() -(Main.getWalls() / 4) || p.getLocation().getBlockX() > Main.getCenter().getBlockX() + Main.getWalls() / 4 || p.getLocation().getBlockX() < Main.getCenter().getBlockX() -(Main.getWalls() / 4) ){
 		    	outside = true;
 			}
 		if(outside == true && Main.getStart() == true){
